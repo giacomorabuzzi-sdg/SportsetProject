@@ -7,4 +7,4 @@ select
 	full_date as full_date_ds,
 	month_key as month_year_cd 
 
-from {{reference('stg_dates')}}
+from {{ref('stg_dates')}}

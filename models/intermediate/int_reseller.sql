@@ -8,4 +8,4 @@ select
 	country_region as country_region_ds,
 	postal_code as postal_code_ds
 
-from {{reference('stg_reseller')}}
+from {{ref('stg_reseller')}}

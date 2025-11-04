@@ -15,4 +15,4 @@ select
 	total_product_cost as total_product_cost_vl,
 	sales_amount as sales_vl
 
-from {{reference('stg_orders')}}
+from {{ref('stg_orders')}}

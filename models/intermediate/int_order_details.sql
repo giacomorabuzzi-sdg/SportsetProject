@@ -4,4 +4,4 @@ select
 	sales_order as sales_order,
 	sales_order_line as sales_order_line
 
-from {{reference('stg_order_details')}}
+from {{ref('stg_order_details')}}

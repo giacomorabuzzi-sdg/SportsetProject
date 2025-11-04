@@ -4,4 +4,4 @@ select
 	country as country_ds,
 	group_ as group_ds
 
-from {{reference('stg_territory')}}
+from {{ref('stg_territory')}}
