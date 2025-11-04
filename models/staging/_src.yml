@@ -1,0 +1,70 @@
+sources:
+  - name: raw_data
+    description: sorgenti dati iniziali caricate (csv)
+    database: sportset
+    schema: raw
+    tables:
+
+      - name: customers_raw
+        description: tabella delle dimensioni customer.
+        columns:
+          - name: customer_key
+            description: chiave primaria per i clienti.
+            tests:
+              - unique
+              - not_null
+
+      - name: dates_raw
+        description: tabella delle dimensioni date.
+        columns:
+          - name: date_key
+            description: chiave primaria del tempo.
+            tests:
+              - unique
+              - not_null
+
+      - name: products_raw
+        description: tabella delle dimensioni product.
+        columns:
+          - name: product_key
+            description: chiave primaria per i prodotti.
+            tests:
+              - unique
+              - not_null
+
+      - name: reseller_raw
+        description: tabella delle dimensioni reseller.
+        columns:
+          - name: reseller_key
+            description: chiave primaria per i rivenditori.
+            tests:
+              - unique
+              - not_null
+
+      - name: sales_territory_raw
+        description: tabella delle dimensioni sales territory.
+        columns:
+          - name: sales_territory_key
+            description: chiave primaria per i territori di vendita.
+            tests:
+              - unique
+              - not_null
+
+
+      - name: orders_raw
+        description: tabella dei fatti delle vendite (dettaglio riga d'ordine).
+        columns:
+          - name: sales_order_line_key
+            description: chiave primaria della riga d'ordine.
+            tests:
+              - unique
+              - not_null
+
+      - name: order_details_raw
+        description: dati di dettaglio ordine e canale.
+        columns:
+          - name: sales_order_line_key
+            description: chiave primaria della riga d'ordine (usata per joining con sales_data).
+            tests:
+              - unique
+              - not_null
