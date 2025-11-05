@@ -21,6 +21,6 @@ models:
     intermediate:
       +schema: intermediate
       +materialized: table
-    marts:
+    mart:
       +schema: final_models
       +materialized: table

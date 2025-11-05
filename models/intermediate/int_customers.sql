@@ -5,6 +5,7 @@ select
 	city as city_ds,
 	state_province as state_province_ds,
 	country_region as country_region_ds,
-	postal_code as postal_code_ds
+	postal_code as postal_code_ds,
+	last_update_timestamp as last_update_ts
 
 from {{ref('stg_customers')}}

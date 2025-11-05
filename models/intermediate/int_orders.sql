@@ -13,6 +13,7 @@ select
 	unit_price_discount_pct as unit_price_discount_pct,
 	product_standard_cost as product_standard_cost_vl,
 	total_product_cost as total_product_cost_vl,
-	sales_amount as sales_vl
+	sales_amount as sales_vl,
+	last_update_timestamp as last_update_ts
 
 from {{ref('stg_orders')}}
