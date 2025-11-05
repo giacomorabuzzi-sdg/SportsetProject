@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  # --- Fatto: Dettagli Ordine (fct_order_details) ---
+  - name: fct_order_details
+    description: "Tabella dei fatti contenente i dettagli delle linee d'ordine."
+    columns:
+      - name: order_id
+        description: "Chiave primaria della riga d'ordine (sales_order_line_key)."
+
+  # --- Fatto: Ordini/Vendite (fct_orders) ---
+  - name: fct_orders
+    description: "Tabella dei fatti principale per le vendite, include tutte le chiavi dimensionali."
+    columns:
+      # Chiave Primaria
+      - name: order_id
+        description: "Chiave primaria della riga d'ordine."
+      
+      # Chiavi Dimensionali (Foreign Keys)
+      - name: reseller_id
+        description: "Chiave esterna alla dimensione Rivenditore."
+      - name: customer_id
+        description: "Chiave esterna alla dimensione Cliente."
+      - name: product_id
+        description: "Chiave esterna alla dimensione Prodotto."
+      - name: sales_territory_id
+        description: "Chiave esterna alla dimensione Area di Vendita."
+      - name: order_date_id
+        description: "Chiave esterna alla dimensione Date (Data Ordine)."
+      - name: due_date_id
+        description: "Chiave esterna alla dimensione Date (Data Scadenza)."
+      - name: ship_date_id
+        description: "Chiave esterna alla dimensione Date (Data Spedizione)."

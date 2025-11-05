@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Dati raw dei clienti con configurazione incrementale."
+    columns:
+      - name: customer_id
+        description: "Chiave unica primaria per il cliente."
+
+  - name: stg_dates
+    description: "Dati raw sulle date con configurazione incrementale."
+    columns:
+      - name: date_id
+        description: "Chiave unica primaria per la data."
+
+  - name: stg_order_details
+    description: "Dati raw sui dettagli degli ordini con configurazione incrementale."
+    columns:
+      - name: order_detail_id
+        description: "Chiave unica primaria per il dettaglio ordine."
+
+  - name: stg_orders
+    description: "Dati raw delle vendite con configurazione incrementale e pulizia dei prezzi."
+    columns:
+      - name: sales_order_line_key
+        description: "Chiave unica primaria per la riga d'ordine."
+      
+  - name: stg_products
+    description: "Dati raw sui prodotti con configurazione incrementale e pulizia dei prezzi."
+    columns:
+      - name: product_key
+        description: "Chiave unica primaria per il prodotto."
+
+  - name: stg_reseller
+    description: "Dati raw sui rivenditori con configurazione incrementale."
+    columns:
+      - name: reseller_key
+        description: "Chiave unica primaria per il rivenditore."
+
+  - name: stg_territory
+    description: "Dati raw sulle aree di vendita con configurazione incrementale."
+    columns:
+      - name: sales_territory_key
+        description: "Chiave unica primaria per l'area di vendita."
+        tests:
+          - unique
+          - not_null

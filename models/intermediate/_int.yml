@@ -1,0 +1,161 @@
+version: 2
+
+models:
+  # --- Modello: Base Customers ---
+  - name: int_customers
+    description: "Modello base per la dimensione Clienti, standardizzazione e pulizia dei dati."
+    columns:
+      - name: customer_id
+        description: "Chiave primaria del cliente (customer_key da staging)."
+      - name: customer_cd
+        description: "Codice/ID cliente alternativo (customer_id da staging)."
+      - name: customer_ds
+        description: "Nome o descrizione completa del cliente."
+      - name: city_ds
+        description: "Nome della città."
+      - name: state_province_ds
+        description: "Nome dello stato o provincia."
+      - name: country_region_ds
+        description: "Nome della nazione o regione."
+      - name: postal_code_ds
+        description: "Codice postale."
+      - name: last_update_ts
+        description: "Timestamp dell'ultimo aggiornamento del record."
+
+  # --- Modello: Base Dates ---
+  - name: int_dates
+    description: "Modello base per la dimensione Tempo/Date."
+    columns:
+      - name: date_id
+        description: "Chiave primaria della data (date_key da staging)."
+      - name: date_dt
+        description: "Data completa (tipo DATE)."
+      - name: fiscal_year_ds
+        description: "Descrizione dell'anno fiscale."
+      - name: fiscal_quarter_ds
+        description: "Descrizione del trimestre fiscale."
+      - name: month_ds
+        description: "Descrizione del mese."
+      - name: full_date_ds
+        description: "Data completa formattata come stringa."
+      - name: month_year_cd
+        description: "Codice Mese/Anno (es. 202301)."
+      - name: last_update_ts
+        description: "Timestamp dell'ultimo aggiornamento del record."
+
+  # --- Modello: Base Order Details ---
+  - name: int_order_details
+    description: "Modello base per i dettagli degli ordini, utilizzato per arricchire la fattuale principale."
+    columns:
+      - name: order_id
+        description: "Chiave primaria della riga d'ordine (sales_order_line_key da staging)."
+      - name: channel_ds
+        description: "Canale di vendita."
+      - name: sales_order
+        description: "ID dell'ordine principale."
+      - name: sales_order_line
+        description: "Numero di riga all'interno dell'ordine principale."
+      - name: last_update_ts
+        description: "Timestamp dell'ultimo aggiornamento del record."
+
+  # --- Modello: Base Orders (Sales Fact Base) ---
+  - name: int_orders
+    description: "Modello base per la Fact Table delle Vendite. Contiene chiavi e misure."
+    columns:
+      - name: order_id
+        description: "Chiave primaria della riga d'ordine (sales_order_line_key da staging)."
+      # Chiavi Esterne (Foreign Keys)
+      - name: reseller_id
+        description: "ID del Rivenditore."
+      - name: customer_id
+        description: "ID del Cliente."
+      - name: product_id
+        description: "ID del Prodotto."
+      - name: sales_territory_id
+        description: "ID dell'Area di Vendita."
+      - name: order_date_id
+        description: "ID Data Ordine (Foreign Key per int_dates)."
+      - name: due_date_id
+        description: "ID Data Scadenza (Foreign Key per int_dates)."
+      - name: ship_date_id
+        description: "ID Data Spedizione (Foreign Key per int_dates)."
+      # Misure (Measures)
+      - name: order_qt
+        description: "Quantità ordinata."
+      - name: unit_price_vl
+        description: "Valore del prezzo unitario (pulito da $ e ,)."
+      - name: extended_amount_vl
+        description: "Valore dell'importo esteso."
+      - name: unit_price_discount_pct
+        description: "Percentuale di sconto sul prezzo unitario."
+      - name: product_standard_cost_vl
+        description: "Costo standard del prodotto."
+      - name: total_product_cost_vl
+        description: "Costo totale del prodotto."
+      - name: sales_vl
+        description: "Valore totale delle vendite (Sales Amount)."
+      - name: last_update_ts
+        description: "Timestamp dell'ultimo aggiornamento del record."
+
+  # --- Modello: Base Products ---
+  - name: int_products
+    description: "Modello base per la dimensione Prodotti."
+    columns:
+      - name: product_id
+        description: "Chiave primaria del prodotto (product_key da staging)."
+      - name: product_cd
+        description: "Codice SKU del prodotto."
+      - name: product_ds
+        description: "Nome descrittivo del prodotto."
+      - name: standard_cost_vl
+        description: "Valore del costo standard (pulito da $ e ,)."
+      - name: color_ds
+        description: "Descrizione del colore."
+      - name: list_price_vl
+        description: "Valore del prezzo di listino (pulito da $ e ,)."
+      - name: model_ds
+        description: "Descrizione del modello."
+      - name: subcategory_ds
+        description: "Descrizione della sottocategoria."
+      - name: category_ds
+        description: "Descrizione della categoria principale."
+      - name: last_update_ts
+        description: "Timestamp dell'ultimo aggiornamento del record."
+
+# --- Modello: Base Resellers ---
+  - name: int_resellers
+    description: "Modello base per la dimensione Rivenditori (Reseller), standardizzazione dei dati."
+    columns:
+      - name: reseller_id
+        description: "Chiave primaria del rivenditore (reseller_key da staging)."
+      - name: reseller_cd
+        description: "Codice/ID rivenditore alternativo (reseller_id da staging)."
+      - name: business_type_ds
+        description: "Descrizione del tipo di attività (Business Type)."
+      - name: reseller_ds
+        description: "Nome o descrizione completa del rivenditore."
+      - name: city_ds
+        description: "Nome della città."
+      - name: state_province_ds
+        description: "Nome dello stato o provincia."
+      - name: country_region_ds
+        description: "Nome della nazione o regione."
+      - name: postal_code_ds
+        description: "Codice postale."
+      - name: last_update_ts
+        description: "Timestamp dell'ultimo aggiornamento del record."
+
+  # --- Modello: Base Sales Territory ---
+  - name: int_sales_territory
+    description: "Modello base per la dimensione Area di Vendita (Sales Territory)."
+    columns:
+      - name: sales_territory_id
+        description: "Chiave primaria dell'area di vendita (sales_territory_key da staging)."
+      - name: region_ds
+        description: "Descrizione della regione di vendita."
+      - name: country_ds
+        description: "Nome della nazione."
+      - name: group_ds
+        description: "Descrizione del gruppo di aree di vendita."
+      - name: last_update_ts
+        description: "Timestamp dell'ultimo aggiornamento del record."

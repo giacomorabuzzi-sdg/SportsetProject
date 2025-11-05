@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  # --- Dimensione: Clienti (dim_customers) ---
+  - name: dim_customers
+    description: "Tabella dimensionale dei Clienti."
+    columns:
+      - name: customer_id
+        description: "Chiave primaria del cliente."
+
+  # --- Dimensione: Date (dim_dates) ---
+  - name: dim_dates
+    description: "Tabella dimensionale del Tempo/Date."
+    columns:
+      - name: date_id
+        description: "Chiave primaria della data."
+
+  # --- Dimensione: Prodotti (dim_products) ---
+  - name: dim_products
+    description: "Tabella dimensionale dei Prodotti."
+    columns:
+      - name: product_id
+        description: "Chiave primaria del prodotto."
+
+  # --- Dimensione: Rivenditori (dim_resellers) ---
+  - name: dim_reseller
+    description: "Tabella dimensionale dei Rivenditori."
+    columns:
+      - name: reseller_id
+        description: "Chiave primaria del rivenditore."
+
+  # --- Dimensione: Territorio di Vendita (dim_territory) ---
+  - name: dim_territory
+    description: "Tabella dimensionale dell'Area di Vendita."
+    columns:
+      - name: sales_territory_id
+        description: "Chiave primaria dell'area di vendita."
