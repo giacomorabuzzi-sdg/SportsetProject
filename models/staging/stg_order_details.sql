@@ -1,6 +1,6 @@
 {{ config(
     materialized='incremental',
-    unique_key='order_detail_id'
+    unique_key='sales_order_line_key'
 ) }}
 
 select
@@ -9,5 +9,5 @@ select
 from {{ source('raw_data', 'order_details_raw') }}
 
 {% if is_incremental() %}
-where order_detail_id not in (select distinct order_detail_id from {{ this }})
+where sales_order_line_key not in (select distinct sales_order_line_key from {{ this }})
 {% endif %}

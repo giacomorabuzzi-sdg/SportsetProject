@@ -24,3 +24,5 @@ models:
     mart:
       +schema: final_models
       +materialized: table
+    public:
+      +schema: public

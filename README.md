@@ -10,10 +10,6 @@ Il progetto non è legato a dati reali di produzione, ma serve come **sandbox di
 - utilizzo di timestamp per tracciare aggiornamenti  
 - progettazione di un flusso logico: `raw → staging → intermediate → marts`
 
-## Struttura del progetto
-
-
-
 ## Dati
 I dati provengono da pagine web scaricate o da CSV simulati. Sono organizzati in tabelle raw come:  
 - `customers_raw`  

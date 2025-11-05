@@ -1,6 +1,6 @@
 {{ config(
     materialized='incremental',
-    unique_key='date_id'
+    unique_key='date_key'
 ) }}
 
 select
@@ -9,5 +9,5 @@ select
 from {{ source('raw_data', 'dates_raw') }}
 
 {% if is_incremental() %}
-where date_id not in (select distinct date_id from {{ this }})
+where date_key not in (select distinct date_key from {{ this }})
 {% endif %}
