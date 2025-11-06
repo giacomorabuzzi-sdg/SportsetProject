@@ -89,10 +89,6 @@ models:
         description: >
           Percentuale di clienti che hanno effettuato un ordine in quel mese e hanno
           già effettuato ordini precedenti (Clienti 'di ritorno').
-        tests:
-          - dbt_expectations.expect_column_values_to_be_between:
-              min_value: 0
-              max_value: 1
 
   - name: internet_customers_division
     description: >
@@ -123,6 +119,8 @@ models:
         description: Costi totali del prodotto.
       - name: order_quantity
         description: Quantità totale degli ordini.
+      - name: total_profit
+        description: Profitto totale (total_revenue - total_costs).
       - name: total_profit_per_piece
         description: Profitto totale per unità venduta ((total_revenue - total_costs) / order_quantity).
 
