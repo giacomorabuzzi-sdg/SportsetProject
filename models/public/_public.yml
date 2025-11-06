@@ -1,0 +1,177 @@
+version: 2
+
+models:
+  - name: annual_sales_variation_by_area
+    description: >
+      Analizza le vendite totali e il profitto per area geografica e anno, calcolando
+      la variazione percentuale rispetto all'anno precedente (YoY) sia per le vendite
+      che per il profitto.
+    columns:
+      - name: sales_year
+        description: Anno delle vendite.
+      - name: area
+        description: Area geografica (dal campo group_ds di dim_territory).
+      - name: total_sales
+        description: Somma totale delle vendite per area e anno.
+      - name: total_sales_prev_year
+        description: Vendite totali dell'anno precedente per la stessa area.
+      - name: total_profit
+        description: Profitto totale (vendite - costi prodotto) per area e anno.
+      - name: pct_sales_variation
+        description: Variazione percentuale delle vendite rispetto all'anno precedente.
+      - name: pct_profit_variation
+        description: Variazione percentuale del profitto rispetto all'anno precedente.
+
+  - name: avg_delay_by_category_and_territory
+    description: >
+      Calcola il ritardo medio nella spedizione e nella consegna (rispetto alla data di scadenza)
+      raggruppato per categoria di prodotto e territorio di vendita.
+    columns:
+      - name: category_ds
+        description: Categoria del prodotto.
+      - name: country_ds
+        description: Nazione del territorio di vendita.
+      - name: group_ds
+        description: Gruppo/Area del territorio di vendita.
+      - name: avg_ship_delay
+        description: Ritardo medio di spedizione (giorni tra data ordine e data spedizione).
+      - name: avg_due_delay
+        description: Ritardo medio rispetto alla scadenza (giorni tra data spedizione e data scadenza).
+
+  - name: avg_ord_val_by_reseller
+    description: >
+      Calcola il Valore Medio dell'Ordine (AOV) per ciascun rivenditore, mese e anno.
+      Include l'AOV del mese precedente/successivo e una media mobile (smoothed_aov).
+    columns:
+      - name: reseller_id
+        description: ID del rivenditore.
+      - name: reseller_ds
+        description: Nome o descrizione del rivenditore.
+      - name: sales_month
+        description: Mese delle vendite.
+      - name: sales_year
+        description: Anno delle vendite.
+      - name: aov
+        description: Valore medio dell'ordine (Average Order Value) per il mese.
+      - name: aov_prev_month
+        description: AOV del mese precedente.
+      - name: aov_next_month
+        description: AOV del mese successivo.
+      - name: smoothed_aov
+        description: Media mobile dell'AOV su tre mesi (attuale, precedente, successivo).
+
+  - name: cost_to_sales_ratio
+    description: >
+      Calcola il rapporto tra il prezzo di listino e il costo standard (`cost_to_sales_ratio`)
+      per ogni prodotto, confrontandolo con la media della sua categoria.
+    columns:
+      - name: product_id
+        description: ID del prodotto.
+      - name: category_ds
+        description: Categoria del prodotto.
+      - name: cost_to_sales_ratio
+        description: Rapporto (Prezzo di Listino / Costo Standard) del prodotto.
+      - name: avg_cost_to_sales_ratio_by_category
+        description: Media del rapporto (Prezzo di Listino / Costo Standard) per la categoria.
+      - name: pct_diff_from_category_avg
+        description: Variazione percentuale del rapporto del prodotto rispetto alla media di categoria.
+
+  - name: customer_repeat_rate
+    description: >
+      Calcola la percentuale di clienti che hanno effettuato più di un ordine in un dato
+      mese/anno (Repeat Rate).
+    columns:
+      - name: month_number
+        description: Mese di riferimento.
+      - name: year_number
+        description: Anno di riferimento.
+      - name: repeat_rate
+        description: >
+          Percentuale di clienti che hanno effettuato un ordine in quel mese e hanno
+          già effettuato ordini precedenti (Clienti 'di ritorno').
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 1
+
+  - name: internet_customers_division
+    description: >
+      Classifica i clienti che hanno acquistato tramite il canale 'Internet' in fasce
+      di valore (Low, Medium, High, Top) basate sui quantili delle loro vendite totali.
+    columns:
+      - name: customer_id
+        description: ID del cliente.
+      - name: customer_ds
+        description: Nome o descrizione del cliente.
+      - name: total_sales
+        description: Vendite totali del cliente sul canale Internet.
+      - name: customer_tier
+        description: Fascia di valore del cliente (Low, Medium, High, Top).
+
+  - name: profitability_by_product_category
+    description: >
+      Riassume le metriche di profitto e costo a livello di Categoria e Sottocategoria
+      di prodotto, inclusa la redditività per unità.
+    columns:
+      - name: category_ds
+        description: Categoria del prodotto.
+      - name: subcategory_ds
+        description: Sottocategoria del prodotto.
+      - name: total_revenue
+        description: Ricavo totale (somma di sales_vl).
+      - name: total_costs
+        description: Costi totali del prodotto.
+      - name: order_quantity
+        description: Quantità totale degli ordini.
+      - name: total_profit_per_piece
+        description: Profitto totale per unità venduta ((total_revenue - total_costs) / order_quantity).
+
+  - name: sales_by_customer_area
+    description: >
+      Totali di ricavi, costi e profitto raggruppati per la provincia e la nazione del cliente.
+    columns:
+      - name: state_province_ds
+        description: Provincia del cliente.
+      - name: country_region_ds
+        description: Nazione del cliente.
+      - name: total_revenue
+        description: Ricavo totale (somma di sales_vl).
+      - name: total_costs
+        description: Costi totali del prodotto.
+      - name: total_profit
+        description: Profitto totale (total_revenue - total_costs).
+
+  - name: sales_by_month
+    description: >
+      Totali aggregati di ricavi, costi e profitto a livello di mese e anno.
+    columns:
+      - name: month_number
+        description: Mese di riferimento.
+      - name: year_number
+        description: Anno di riferimento.
+      - name: total_revenue
+        description: Ricavo totale (somma di sales_vl).
+      - name: total_costs
+        description: Costi totali del prodotto.
+      - name: total_profit
+        description: Profitto totale (total_revenue - total_costs).
+
+  - name: sales_by_reseller
+    description: >
+      Totali aggregati di ricavi, costi e profitto per ogni rivenditore, inclusi
+      il tipo di attività e la nazione.
+    columns:
+      - name: reseller_id
+        description: ID del rivenditore.
+      - name: reseller_ds
+        description: Nome o descrizione del rivenditore.
+      - name: business_type_ds
+        description: Tipo di attività del rivenditore.
+      - name: country_region_ds
+        description: Nazione del rivenditore.
+      - name: total_revenue
+        description: Ricavo totale (somma di sales_vl).
+      - name: total_costs
+        description: Costi totali del prodotto.
+      - name: total_profit
+        description: Profitto totale (total_revenue - total_costs).
