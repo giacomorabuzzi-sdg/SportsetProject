@@ -173,3 +173,42 @@ models:
         description: Costi totali del prodotto.
       - name: total_profit
         description: Profitto totale (total_revenue - total_costs).
+
+  - name: sell_through_ratio
+    description: >
+      Calcola il rapporto percentuale tra le vendite al cliente (**Sell Out**) e i costi totali del prodotto (**Sell In**) a livello giornaliero.
+    columns:
+      - name: date_dt
+        description: Data di riferimento.
+      - name: sell_in
+        description: Somma dei costi totali del prodotto (total_product_cost_vl - Costo del prodotto/inventario/acquisto).
+      - name: sell_out
+        description: Somma delle vendite totali (sales_vl - Ricavi).
+      - name: sell_through
+        description: Rapporto percentuale Sell Out / Sell In.
+
+  - name: customer_rfq_tier
+    description: >
+      Classifica i clienti in fasce di valore (**Low, Medium, High, Top**) basate sia sul Ricavo Totale che sulla Quantità di Ordini (Fidelizzazione) utilizzando i quantili.
+    columns:
+      - name: customer_id
+        description: ID del cliente.
+      - name: customer_ds
+        description: Nome o descrizione del cliente.
+      - name: total_sales
+        description: Vendite totali del cliente.
+      - name: order_quantity
+        description: Quantità totale degli ordini effettuati dal cliente.
+      - name: customer_rev_tier
+        description: Fascia di valore del cliente basata sui Ricavi Totali (Low, Medium, High, Top).
+      - name: customer_fid_tier
+        description: Fascia di valore del cliente basata sulla Quantità di Ordini (Low, Medium, High, Top).
+
+  - name: daily_customers
+    description: >
+      Conta il numero di clienti unici che hanno effettuato ordini ogni giorno.
+    columns:
+      - name: date_dt
+        description: Data dell'ordine.
+      - name: daily_number_customers
+        description: Numero di clienti unici che hanno effettuato ordini in quella data.
